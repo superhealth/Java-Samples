@@ -34,6 +34,60 @@ public class GetLocationGEO {
 		return places;
 	}
 	
+	/**
+	 {
+		"status" :
+		"1",
+		"info" :
+		"OK",
+		"infocode" :
+		"10000",
+		"count" :
+		"1",
+		"geocodes" :
+		[
+		"0" :
+		{
+		"formatted_address" :
+		"四川省广安市岳池县岳池县体育馆",
+		"province" :
+		"四川省",
+		"citycode" :
+		"0826",
+		"city" :
+		"广安市",
+		"district" :
+		"岳池县",
+		"township" :
+		[ ],
+		"neighborhood" :
+		{
+		"name" :
+		[ ],
+		"type" :
+		[ ]
+		},
+		"building" :
+		{
+		"name" :
+		[ ],
+		"type" :
+		[ ]
+		},
+		"adcode" :
+		"511621",
+		"street" :
+		[ ],
+		"number" :
+		[ ],
+		"location" :
+		"106.453087,30.534534",
+		"level" :
+		"兴趣点"
+		}
+		]
+		}
+	 */
 	public static String getGEOFromGaode(String address,String city){
 		CloseableHttpClient httpclient = HttpClients.createDefault();  
         try {  
@@ -55,8 +109,11 @@ public class GetLocationGEO {
 //                    System.out.println("Response content: " + EntityUtils.toString(entity));  
                     JSONObject jsonObject=JSON.parseObject(EntityUtils.toString(entity));
                     JSONArray jsonArray=jsonObject.getJSONArray("geocodes");
-                    JSONObject jsonObject1=jsonArray.getJSONObject(0);
-                    return jsonObject1.getString("location");
+                    if(jsonArray!=null && jsonArray.size()>0){
+                    	JSONObject jsonObject1=jsonArray.getJSONObject(0);
+                    	System.out.println(jsonObject1.getString("formatted_address"));
+                    	return jsonObject1.getString("location");
+                    }
                 }  
                 System.out.println("------------------------------------");  
             } finally {  
