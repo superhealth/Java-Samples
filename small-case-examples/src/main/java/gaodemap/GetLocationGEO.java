@@ -20,7 +20,16 @@ import com.alibaba.fastjson.JSONObject;
 public class GetLocationGEO {
 	
 	public static void main(String[] args) {
-		getExamPlace();
+		List<String> places =ExamPlace.places;
+		StringBuffer sb=new StringBuffer("");
+		for (String place : places) {
+			System.out.println(place);
+			String geo=getGEOFromGaode(place,"");
+			
+			sb.append(place+","+geo+"\n");
+			
+		}
+		System.out.println(sb.toString());
 //		getGEOFromGaode("北京市朝阳区阜通东大街6号","北京市");
 	}
 	
@@ -92,30 +101,30 @@ public class GetLocationGEO {
 		CloseableHttpClient httpclient = HttpClients.createDefault();  
         try {  
             // 创建httpget.    
-            HttpGet httpget = new HttpGet("http://restapi.amap.com/v3/geocode/geo?address="+address+"&city="+city+"&output=JSON&key=b13bfc1b372dae53408d792edc5cbaaa");  
-            System.out.println("executing request " + httpget.getURI());  
+//        	HttpGet httpget = new HttpGet("http://restapi.amap.com/v3/geocode/geo?address="+address+"&city="+city+"&output=JSON&key=b13bfc1b372dae53408d792edc5cbaaa");  
+            HttpGet httpget = new HttpGet("http://restapi.amap.com/v3/geocode/geo?address="+address+"&output=JSON&key=b13bfc1b372dae53408d792edc5cbaaa");  
+//            System.out.println("executing request " + httpget.getURI());  
             // 执行get请求.    
             CloseableHttpResponse response = httpclient.execute(httpget);  
             try {  
                 // 获取响应实体    
                 HttpEntity entity = response.getEntity();  
-                System.out.println("--------------------------------------");  
+//                System.out.println("--------------------------------------");  
                 // 打印响应状态    
-                System.out.println(response.getStatusLine());  
+//                System.out.println(response.getStatusLine());  
                 if (entity != null) {  
                     // 打印响应内容长度    
-                    System.out.println("Response content length: " + entity.getContentLength());  
+//                    System.out.println("Response content length: " + entity.getContentLength());  
                     // 打印响应内容    
 //                    System.out.println("Response content: " + EntityUtils.toString(entity));  
                     JSONObject jsonObject=JSON.parseObject(EntityUtils.toString(entity));
                     JSONArray jsonArray=jsonObject.getJSONArray("geocodes");
                     if(jsonArray!=null && jsonArray.size()>0){
                     	JSONObject jsonObject1=jsonArray.getJSONObject(0);
-                    	System.out.println(jsonObject1.getString("formatted_address"));
-                    	return jsonObject1.getString("location");
+                    	return jsonObject1.getString("formatted_address")+","+jsonObject1.getString("location");
                     }
                 }  
-                System.out.println("------------------------------------");  
+//                System.out.println("------------------------------------");  
             } finally {  
                 response.close();  
             }  
