@@ -7,8 +7,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.sh.chapter2.helloworld.HelloApi;
 
 /**
- * 实例化Bean
- * 
+ * 4种依赖注入方式
+ * 1：set注入
+ * 2：构造器注入
+ * 3：静态工厂注入
+ * 4：实例工厂注入
+ *
  * Created by lkn on 2017/12/12.
  */
 public class InstantiatingBeanTest {
