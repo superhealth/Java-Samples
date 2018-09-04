@@ -36,7 +36,7 @@ public class GetLocationGEO {
 	private static List<ExamPlace> getExamPlace() {
 		String s = FileUtil.getText(GetLocationGEO.class, "place.csv");
 		String[] line = s.split("\n");
-		List<ExamPlace> places = new ArrayList<>();
+		List<ExamPlace> places = new ArrayList<ExamPlace>();
 		for (String l : line) {
 			System.out.println(l);
 		}
