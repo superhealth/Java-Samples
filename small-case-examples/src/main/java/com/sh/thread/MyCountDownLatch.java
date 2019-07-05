@@ -43,7 +43,7 @@ public class MyCountDownLatch implements Runnable {
         CountDownLatch latch = new CountDownLatch(5);
         for (int i = 0; i < 5; i++) {
             MyCountDownLatch thread = new MyCountDownLatch(latch);
-            thread.run();
+            new Thread(thread).start();
         }
 
         System.out.println("main thread await. ");
