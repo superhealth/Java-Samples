@@ -17,7 +17,6 @@ public class MyCountDownLatch implements Runnable {
         this.latch = latch;
     }
 
-    @Override
     public void run() {
         try {
             System.out.println(Thread.currentThread().getName() + " execute task. ");

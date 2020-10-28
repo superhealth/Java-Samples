@@ -6,7 +6,7 @@
         <module>algorithm</module>
     </modules>
 
-    <artifactId>Java-Samples-parent</artifactId>
+    <artifactId>Java-Samples</artifactId>
 	<packaging>pom</packaging>
 
 	<scm>
