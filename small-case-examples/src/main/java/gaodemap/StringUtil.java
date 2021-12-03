@@ -1,15 +1,19 @@
 package gaodemap;
 
+import org.springframework.util.CollectionUtils;
+
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
- * 
+ *
  * @author wangym
  * @date 2016-08-01
  */
@@ -158,7 +162,7 @@ public class StringUtil {
 
 	/**
 	 * 判断equal,主要为了防止空指针异常
-	 * 
+	 *
 	 * @param nullToEmpty
 	 *            如果此参数为true,则在判断是认为null和""是equal的
 	 */
@@ -334,5 +338,36 @@ public class StringUtil {
 			return true;
 		}
 		return str.indexOf(filter) != -1;
+	}
+
+
+	// 将字符串转成hash值
+	public static int toHash(String key) {
+		int arraySize = 11113; // 数组大小一般取质数
+		int hashCode = 0;
+		for (int i = 0; i < key.length(); i++) { // 从字符串的左边开始计算
+			int letterValue = key.charAt(i) - 96;// 将获取到的字符串转换成数字，比如a的码值是97，则97-96=1
+			// 就代表a的值，同理b=2；
+			hashCode = ((hashCode << 5) + letterValue) % arraySize;// 防止编码溢出，对每步结果都进行取模运算
+		}
+		return hashCode;
+	}
+
+	public static void main(String[] args) {
+//		System.out.println(toHash("将字符串转成hash值"));
+
+		List<LocalDateTime> localDateTimes = new ArrayList<>();
+		localDateTimes.add(LocalDateTime.now().minusDays(5));
+		localDateTimes.add(LocalDateTime.now().minusDays(2));
+		localDateTimes.add(LocalDateTime.now().minusDays(1));
+		localDateTimes.add(LocalDateTime.now().minusDays(8));
+
+		localDateTimes = localDateTimes.stream().filter(e -> {
+			return e != null;
+		}).sorted(LocalDateTime::compareTo).collect(Collectors.toList());
+
+
+		System.out.println(localDateTimes.get(localDateTimes.size()-1).toString());
+
 	}
 }
